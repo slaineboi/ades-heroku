@@ -39,7 +39,9 @@ app.post('/reset', function (req, res) {//Idk if this is the right way to do it.
             })
         }
         else {
-            res.status(200).end()
+            res.status(200).send({
+                "message":"table resetted"
+            })
         }
     })
 })
