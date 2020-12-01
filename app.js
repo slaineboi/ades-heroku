@@ -1,13 +1,11 @@
 const express = require('express'); // DO NOT DELETE
 const cors = require('cors');
-const morgan = require('morgan');
 const validate = require('jsonschema').validate;
 const app = express(); // DO NOT DELETE
 
 const database = require('./database');
 const { queue, log } = require('async');
 
-app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json())
 
