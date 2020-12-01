@@ -4,7 +4,6 @@ const validate = require('jsonschema').validate;
 const app = express(); // DO NOT DELETE
 
 const database = require('./database');
-const { queue, log } = require('async');
 
 app.use(cors());
 app.use(express.json())

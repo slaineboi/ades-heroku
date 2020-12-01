@@ -1,4 +1,3 @@
-const { log } = require('async')
 const e = require('express')
 const { Pool, Client } = require('pg')
 const pool = new Pool({
