@@ -2,10 +2,10 @@ const { log } = require('async')
 const e = require('express')
 const { Pool, Client } = require('pg')
 const pool = new Pool({
-    user: 'ftzvjgxu',
+    user: 'blouqlco',
     host: 'john.db.elephantsql.com',
-    database: 'ftzvjgxu',
-    password: 'gQt5XXIrCa81Dcn2MTonBdeQc59ER4Aw',
+    database: 'blouqlco',
+    password: 'NyUJIrI_hGmNkYSJ_zpjQ60uSkMMkzjI',
     port: 5432,
 })
 
