@@ -1,6 +1,5 @@
 const express = require('express'); // DO NOT DELETE
 const cors = require('cors');
-const validate = require('jsonschema').validate;
 const app = express(); // DO NOT DELETE
 
 const database = require('./database');
@@ -40,7 +39,7 @@ app.post('/reset', function (req, res) {//Idk if this is the right way to do it.
         }
         else {
             res.status(200).send({
-                "message":"table resetted"
+                "message": "table resetted"
             })
         }
     })
@@ -56,36 +55,23 @@ app.get('/customer/queue', function (req, res) {
     }
     const customer_id = req.query.customer_id
     console.log(queue_id, customer_id)
-    let schema = schemaObj.check_queue;
-    let errorStatusMsg;
-    let validateStatus = validate(req.query, schema)
+    
+    database.checkQueue(customer_id, queue_id, function (err, result) {
+        if (!err) {
+            res.status(200).json(result)
 
-    if (validateStatus.errors.length != 0) { // JSON Validation Handling
-        errorStatusMsg = checkErrorMsg(validateStatus);
+        } else if (err.code = "UNKNOWN_QUEUE") {
+            res.status(404).json(err)
 
-        res.status(400).json({
-            error: errorStatusMsg,
-            code: "INVALID_QUERY_STRING"
-        })
+        } else {
+            console.log(err)
+            res.status(500).json({
+                error: "Unable to establish connection with database",
+                code: "UNEXPECTED_ERROR"
+            })
 
-    } else {
-        database.checkQueue(customer_id, queue_id, function (err, result) {
-            if (!err) {
-                res.status(200).json(result)
-
-            } else if (err.code = "UNKNOWN_QUEUE") {
-                res.status(404).json(err)
-
-            } else {
-                console.log(err)
-                res.status(500).json({
-                    error: "Unable to establish connection with database",
-                    code: "UNEXPECTED_ERROR"
-                })
-
-            }
-        });
-    }
+        }
+    });
 
 
 })
