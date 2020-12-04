@@ -46,6 +46,49 @@ app.post('/reset', function (req, res) {//Idk if this is the right way to do it.
     })
 })
 
+/**
+ * Customer: Check Queue
+ */
+app.get('/customer/queue', function (req, res) {
+    const queue_id = req.query.queue_id;
+    if (req.query.customer_id != undefined) {
+        req.query.customer_id = Number(req.query.customer_id) // parse query STRING to INT
+    }
+    const customer_id = req.query.customer_id
+    let schema = schemaObj.check_queue;
+    let errorStatusMsg;
+    let validateStatus = validate(req.query, schema)
+
+    if (validateStatus.errors.length != 0) { // JSON Validation Handling
+        errorStatusMsg = checkErrorMsg(validateStatus);
+
+        res.status(400).json({
+            error: errorStatusMsg,
+            code: "INVALID_QUERY_STRING"
+        })
+
+    } else {
+        database.checkQueue(customer_id, queue_id, function (err, result) {
+            if (!err) {
+                res.status(200).json(result)
+
+            } else if (err.code = "UNKNOWN_QUEUE") {
+                res.status(404).json(err)
+
+            } else {
+                console.log(err)
+                res.status(500).json({
+                    error: "Unable to establish connection with database",
+                    code: "UNEXPECTED_ERROR"
+                })
+
+            }
+        });
+    }
+
+
+})
+
 
 
 /**
