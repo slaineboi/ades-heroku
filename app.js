@@ -55,6 +55,7 @@ app.get('/customer/queue', function (req, res) {
         req.query.customer_id = Number(req.query.customer_id) // parse query STRING to INT
     }
     const customer_id = req.query.customer_id
+    console.log(queue_id, customer_id)
     let schema = schemaObj.check_queue;
     let errorStatusMsg;
     let validateStatus = validate(req.query, schema)
