@@ -124,6 +124,7 @@ function closeDatabaseConnections() {
 }
 
 module.exports = {
+    checkQueue,
     resetTables,
     closeDatabaseConnections,
 };
